@@ -3,10 +3,14 @@
 namespace App\Http\Controllers\frontend;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\commentRequest;
+use App\Http\Requests\editCommentRequest;
 use App\Http\Requests\StorePostRequest;
 use App\Models\Category;
+use App\Models\Comment;
 use App\Models\Post;
 use App\Models\Post_images;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\File;
@@ -172,5 +176,95 @@ class UsersController extends Controller
         }
     }
 
-  
+    public function user_comments()
+    {
+        // $posts_id = auth()->user()->posts()->select('id')->get();  the same way !
+        $posts_id = auth()->user()->posts->pluck('id')->toArray();
+        $comments = Comment::whereIn('post_id', $posts_id)->orderBy('id', 'desc')->paginate(10);
+        return view('frontend.users.comments', compact('comments'));
+    }
+
+
+    public function edit_comment($comment_id)
+    {
+        $comment = Comment::whereId($comment_id)
+            ->whereHas('post', function ($query) {
+                $query->where('posts.user_id', auth()->id());
+            })->first();
+
+        if ($comment) {
+            return view('frontend.users.edit_comments', compact('comment'));
+        } else {
+            return redirect()->back()->with([
+                'message' => 'Something was wrong',
+                'alert-type' => 'danger',
+            ]);
+        }
+    }
+
+    public function update_comment(editCommentRequest $request, $comment_id)
+    {
+
+        $comment = Comment::whereId($comment_id)
+            ->whereHas('post', function ($query) {
+                $query->where('posts.user_id', auth()->id());
+            })->first();
+
+        if ($comment) {
+
+            $data['name'] = $request->name;
+            $data['email'] = $request->email;
+            $data['url'] = $request->url != '' ? $request->url : null;
+            $data['status'] = $request->status;
+            $data['comment'] = $request->comment;
+
+            $comment->update($data);
+            if ($request->status == 1) {
+                Cache::forget('recent_comments');
+            }
+            return redirect()->back()->with([
+                'message' => 'Comment Updated Successfully',
+                'alert-type' => 'success',
+            ]);
+        } else {
+            return redirect()->back()->with([
+                'message' => 'Something was wrong',
+                'alert-type' => 'danger',
+            ]);
+        }
+    }
+
+    public function delete_comment($comment_id)
+    {
+        $comment = Comment::whereId($comment_id)
+            ->whereHas('post', function ($query) {
+                $query->where('posts.user_id', auth()->id());
+            })->first();
+
+        if ($comment) {
+            $comment->delete();
+          
+                Cache::forget('recent_comments');
+          
+            return redirect()->back()->with([
+                'message' => 'Comment Deleted Successfully',
+                'alert-type' => 'success',
+            ]);
+        } else {
+            return redirect()->back()->with([
+                'message' => 'Something was wrong',
+                'alert-type' => 'danger',
+            ]);
+        }
+    }
+
+    public function edit_info()
+    {
+        return view('frontend.users.edit-info');
+    }
+
+    public function update_info()
+    {
+
+    }
 }

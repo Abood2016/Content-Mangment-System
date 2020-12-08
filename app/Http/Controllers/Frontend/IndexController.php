@@ -63,7 +63,7 @@ class IndexController extends Controller
 
         if ($post) {
 
-            $user_id = auth()->check() ? auth()->id : null;
+            $user_id = auth()->check() ? auth()->id() : null;
 
             $data['name'] = $request->name;
             $data['email'] = $request->email;
