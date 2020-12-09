@@ -5,6 +5,7 @@ namespace App\Http\Controllers\frontend;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\commentRequest;
 use App\Http\Requests\editCommentRequest;
+use App\Http\Requests\editUserRequest;
 use App\Http\Requests\StorePostRequest;
 use App\Models\Category;
 use App\Models\Comment;
@@ -14,8 +15,10 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Intervention\Image\Facades\Image;
+use Illuminate\Support\Str;
 
 
 class UsersController extends Controller
@@ -110,6 +113,7 @@ class UsersController extends Controller
             if ($request->images && count($request->images) > 0) {
                 $i = 1;
                 foreach ($request->images as $file) {
+
                     $filename = $post->slug . '-' . time() . '-' . $i . '.' . $file->getClientOriginalExtension();
                     $file_size = $file->getSize();
                     $file_type = $file->getMimeType();
@@ -117,6 +121,7 @@ class UsersController extends Controller
                     Image::make($file->getRealPath())->resize(800, null, function ($constraint) {
                         $constraint->aspectRatio();
                     })->save($path, 100);
+
                     $post->media()->create([
                         'image_name' => $filename,
                         'image_size' => $file_size,
@@ -243,9 +248,9 @@ class UsersController extends Controller
 
         if ($comment) {
             $comment->delete();
-          
-                Cache::forget('recent_comments');
-          
+
+            Cache::forget('recent_comments');
+
             return redirect()->back()->with([
                 'message' => 'Comment Deleted Successfully',
                 'alert-type' => 'success',
@@ -260,11 +265,80 @@ class UsersController extends Controller
 
     public function edit_info()
     {
-        return view('frontend.users.edit-info');
+        return view('frontend.users.edit_info');
     }
 
-    public function update_info()
+    public function update_info(editUserRequest $request)
     {
 
+        $data['name']           = $request->name;
+        $data['email']          = $request->email;
+        $data['mobile']         = $request->mobile;
+        $data['bio']            = $request->bio;
+        $data['receive_emails']  = $request->receive_emails;
+
+
+        if ($image = $request->file('image')) {
+            if (auth()->user()->user_image != '') {
+                if (File::exists('/front-end/users/' . auth()->user()->image)) {
+                    unlink('/front-end/users/' . auth()->user()->image);
+                }
+            }
+            $filename = Str::slug(auth()->user()->username) . '.' . $image->getClientOriginalExtension();
+            $path = public_path('front-end/users/' . $filename);
+            Image::make($image->getRealPath())->resize(300, 300, function ($constraint) {
+                $constraint->aspectRatio();
+            })->save($path, 100);
+
+            $data['image'] = $filename;
+        }
+
+        $update = auth()->user()->update($data);
+        if ($update) {
+            return redirect()->back()->with([
+                'message' => 'Information Updated Successfully',
+                'alert-type' => 'success',
+            ]);
+        } else {
+            return redirect()->back()->with([
+                'message' => 'Somethig Went Wrong',
+                'alert-type' => 'danger',
+            ]);
+        }
+    }
+
+    public function update_password(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'current_password'  => 'required',
+            'password'          => 'required|confirmed'
+        ]);
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput();
+        }
+
+        $user = auth()->user();
+        if (Hash::check($request->current_password, $user->password)) {
+            $update = $user->update([
+                'password' => bcrypt($request->password),
+            ]);
+
+            if ($update) {
+                return redirect()->back()->with([
+                    'message' => 'Password updated successfully',
+                    'alert-type' => 'success',
+                ]);
+            } else {
+                return redirect()->back()->with([
+                    'message' => 'Something was wrong',
+                    'alert-type' => 'danger',
+                ]);
+            }
+        } else {
+            return redirect()->back()->with([
+                'message' => 'Something was wrong',
+                'alert-type' => 'danger',
+            ]);
+        }
     }
 }
