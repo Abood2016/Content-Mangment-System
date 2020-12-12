@@ -9,6 +9,7 @@
     "license": "MIT",
     "require": {
         "php": "^7.2.5|^8.0",
+        "beyondcode/laravel-websockets": "^1.9",
         "cviebrock/eloquent-sluggable": "^7.0",
         "fideloper/proxy": "^4.4",
         "fruitcake/laravel-cors": "^2.0",
@@ -17,10 +18,11 @@
         "intervention/imagecache": "^2.5",
         "laravel/framework": "^7.29",
         "laravel/tinker": "^2.5",
-        "predis/predis": "^1.1",
         "laravel/ui": "^2.4",
         "mindscms/entrust": "^2.0",
-        "nicolaslopezj/searchable": "^1.13"
+        "nicolaslopezj/searchable": "^1.13",
+        "predis/predis": "^1.1",
+        "pusher/pusher-php-server": "~4.0"
     },
     "require-dev": {
         "facade/ignition": "^2.0",
