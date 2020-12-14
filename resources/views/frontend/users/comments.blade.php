@@ -45,7 +45,8 @@
                             </tbody>
                             <tfoot>
                                 <tr>
-                                    <td colspan="4">{!! $comments->links() !!} </td>
+                                    <!--appends(request()->input()) عشاان لم اعمل تنقل بين الصفحاتما يضيعيش المتغير الي ف الراوت--> 
+                                    <td colspan="4">{!! $comments->appends(request()->input())->links() !!} </td>
                                 </tr>
                             </tfoot>
                         </table>

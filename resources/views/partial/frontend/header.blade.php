@@ -89,28 +89,7 @@
                 <ul class="header__sidebar__right d-flex justify-content-end align-items-center">
                     <li class="shop_search"><a class="search__active" href="#"></a></li>
                     {{-- <li class="wishlist"><a href="#"></a></li> --}}
-                    <li class="shopcart"><a class="cartbox_active" href="#"><span class="product_qun">3</span></a>
-                        <!-- Start Shopping Cart -->
-                        <div class="block-minicart minicart__active">
-                            <div class="minicart-content-wrapper">
-
-                                <div class="single__items">
-                                    <div class="miniproduct">
-                                        <div class="item01 d-flex">
-                                            <div class="thumb">
-                                                <a href="product-details.html"><img width="50" height="50"
-                                                        src="{{ asset('front-end/posts/default-small.jpg') }}"
-                                                        alt="product images"></a>
-                                            </div>
-                                            <div class="content">
-                                                <h6><a href="product-details.html">You have new Comment on post</a></h6>
-
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- End Shopping Cart -->
-                    </li>
+                   <user-notoification></user-notoification>
                     <li class="setting__bar__icon"><a class="setting__active" href="#"></a>
                         <div class="searchbar__content setting__block">
                             <div class="content-inner">
@@ -183,12 +162,13 @@
 <!-- //Header -->
 <!-- Start Search Popup -->
 <div class="box-search-content search_active block-bg close__top">
-    <form id="search_mini_form" class="minisearch" action="#">
+
+    <form action="{{ route('post.search') }}" method="GET" id="search_mini_form" class="minisearch">
         <div class="field__search">
-            <input type="text" placeholder="Search entire store here...">
-            <div class="action">
-                <a href="#"><i class="zmdi zmdi-search"></i></a>
-            </div>
+            <input type="text" name="keyword" value="{{ request()->keyword }}" placeholder="Search...">
+            <a href="javascript:void(0);"
+                onclick="event.preventDefault(); document.getElementById('search_mini_form').submit();"><i
+                    class="zmdi zmdi-search"></i></a>
         </div>
     </form>
     <div class="close__wrap">

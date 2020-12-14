@@ -1,15 +1,16 @@
 <!doctype html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<meta name="csrf-token" content="{{ csrf_token() }}">
 
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="shortcut icon" href="images/favicon.ico">
     <!-- CSRF Token -->
-  <meta name="csrf-token" content="{{ csrf_token() }}">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <meta name="userId" content="{{ auth()->check() ? auth()->id()  : '' }}">
 
     <title>{{ config('app.name', 'Laravel') }}</title>
-
 
 
     <!-- Fonts -->
@@ -44,12 +45,15 @@
 
 <body>
     <div id="app">
+
         <div class="wrapper" id="wrapper">
+
             @include('partial.frontend.header')
             <main>
                 @include('partial.flash')
                 @yield('content')
             </main>
+
             @include('partial.frontend.footer')
         </div>
     </div>
@@ -60,7 +64,7 @@
     <script src="{{ asset('front-assets/js/plugins.js') }}"></script>
     <script src="{{ asset('front-assets/js/active.js') }}"></script>
 
-    
+
     <script src="{{ asset('front-assets/js/bootstrap-fileinput/js/plugins/piexif.min.js') }}"></script>
     <script src="{{ asset('front-assets/js/bootstrap-fileinput/js/plugins/sortable.min.js') }}"></script>
     <script src="{{ asset('front-assets/js/bootstrap-fileinput/js/plugins/purify.min.js') }}"></script>

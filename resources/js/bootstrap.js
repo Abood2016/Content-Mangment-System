@@ -24,9 +24,12 @@ window.axios = require('axios');
 window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 window.axios.defaults.headers.common['Content-Type'] = 'application/json';
 
-let token = document.head.querySelector('mata[name="csrf-token"]');
+let token = document.querySelector('meta[name="csrf-token"]');
+
 if (token) {
     window.axios.defaults.headers.common['X-CSRF-TOKEN'] = token.content;
+    // console.log('CSRF token found');
+
 } else {
     console.log('CSRF token not found');
 }

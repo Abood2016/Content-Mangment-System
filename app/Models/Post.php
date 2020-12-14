@@ -52,4 +52,14 @@ class Post extends Model
     {
         return $this->hasMany(Post_images::class);
     }
+
+    public function scopeActive($q)
+    {
+        return $q->where('status',1);
+    }
+
+    public function scopePost($q)
+    {
+        return $q->where('post_type', 'post');
+    }
 }
