@@ -62,7 +62,7 @@ class IndexController extends Controller
 
         if ($post) {
 
-            $user_id = auth()->check() ? auth()->id() : null;
+            $userId = auth()->check() ? auth()->id() : null;
 
             $data['name'] = $request->name;
             $data['email'] = $request->email;
@@ -70,10 +70,10 @@ class IndexController extends Controller
             $data['ip_address'] = $request->ip();
             $data['comment'] = $request->comment;
             $data['post_id'] = $post->id;
-            $data['user_id'] = $user_id;
+            $data['user_id'] = $userId;
 
             $comment =   $post->comments()->create($data);
-            if (auth()->guest() || auth()->id != $post->user_id) {
+            if (auth()->guest() || auth()->id() != $post->user_id) {
                 $post->user->notify(new NewCommentForPostOwnerNotify($comment));
             }
 

@@ -165,6 +165,7 @@ class UsersController extends Controller
             'message' => 'Something was wrong',
             'alert-type' => 'danger',
         ]);
+
     }
 
     public function destroy_post_media($media_id)

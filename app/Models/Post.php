@@ -55,11 +55,16 @@ class Post extends Model
 
     public function scopeActive($q)
     {
-        return $q->where('status',1);
+        return $q->where('status', 1);
     }
 
     public function scopePost($q)
     {
         return $q->where('post_type', 'post');
+    }
+
+    public function status()
+    {
+        return  $this->status == 1 ? 'Active' : 'DeActive';
     }
 }

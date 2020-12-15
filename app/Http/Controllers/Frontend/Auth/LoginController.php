@@ -51,16 +51,17 @@ class LoginController extends Controller
 
     protected function authenticated(Request $request, $user)
     {
+
         if ($user->status == 1) {
             return redirect()->route('frontend.dashboard')->with([
-                'message' => 'Your Are logged in',
+                'message' => 'Logged in successfully.',
                 'alert-type' => 'success'
             ]);
-        } else {
-            return redirect()->route('frontend.index')->with([
-                'message' => 'Please Contact CMS Admins',
-                'alert-type' => 'warning'
-            ]);
         }
+
+        return redirect()->route('frontend.index')->with([
+            'message' => 'Please contact CMS Admin.',
+            'alert-type' => 'warning'
+        ]);
     }
 }

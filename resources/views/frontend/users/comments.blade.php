@@ -22,7 +22,7 @@
                                 <tr>
                                     <td>{{ $comment->name }}</td>
                                     <td>{{ $comment->post->title }}</td>
-                                    <td>{{ $comment->status }}</td>
+                                    <td><span class="badge badge-warning">{{ $comment->status() }}</span></td>
                                     <td>
                                         <a href="{{ route('users.comments.edit', $comment->id) }}"
                                             class="btn btn-sm btn-primary"><i class="fa fa-edit"></i></a>

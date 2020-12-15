@@ -99,23 +99,6 @@
                             </li>
                             @endforelse
                             <li>
-                                <div class="wn__comment">
-                                    <div class="thumb">
-                                        <img src="{{ asset('front-assets/images/blog/comment/1.jpeg') }}"
-                                            alt="comment images">
-                                    </div>
-                                    <div class="content">
-                                        <div class="comnt__author d-block d-sm-flex">
-                                            <span><a href="#">admin</a> Post author</span>
-                                            <span>October 6, 2014 at 9:26 am</span>
-                                            <div class="reply__btn">
-                                                <a href="#">Reply</a>
-                                            </div>
-                                        </div>
-                                        <p>Sed interdum at justo in efficitur. Vivamus gravida volutpat sodales. Fusce
-                                            ornare sit</p>
-                                    </div>
-                                </div>
                             </li>
                         </ul>
                     </div>

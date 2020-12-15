@@ -22,8 +22,8 @@ class CreateCommentsTable extends Migration
             $table->text('comment');
             $table->unsignedTinyInteger('status')->default(0);
 
-            $table->foreignId('post_id')->constrained()->OnDelete('cascade');
-            $table->foreignId('user_id')->nullable()->constrained()->OnDelete('cascade');
+            $table->foreignId('post_id')->constrained()->onDelete('cascade');
+            $table->foreignId('user_id')->nullable()->constrained()->onDelete('cascade');
 
             $table->timestamps();
         });
