@@ -26,7 +26,7 @@ class CheckRole
                 return $next($request);
             } else {
                 if ($route[0] != auth()->user()->roles[0]->allowed_route) {
-                    $path = $route[0] == auth()->user()->roles[0]->allowed_route ? $route[0] . '.show_login_form' : '' . auth()->user()->roles[0]->allowed_route . '.index';
+                    $path = $route[0] == auth()->user()->roles[0]->allowed_route ? $route[0] . '.show_login_form' : '' . auth()->user()->roles[0]->allowed_route . 'frontend.index';
                     return redirect()->route($path);
                 } else {
                     return $next($request);
@@ -34,7 +34,7 @@ class CheckRole
             }
         } else {
             $routeDistination = in_array($route[0], $roleRoutes) ? $route[0] . '.show_login_form' : 'user.show_login_form';
-            $path = $route[0] != '' ? $routeDistination : auth()->user()->roles[0]->allowed_route . '.index';
+            $path = $route[0] != '' ? $routeDistination : auth()->user()->roles[0]->allowed_route . 'frontend.index';
             return redirect()->route($path);
         }
     }
