@@ -13,9 +13,9 @@
                                 <div class="thumb">
                                     <a href="#">
                                         @if ($post->media->count() > 0)
-                                        <img src="{{ asset('front-end/posts/' . $post->media->first()->image_name) }}" alt="blog images">
+                                        <img src="{{ asset('assets/posts/' . $post->media->first()->image_name) }}" alt="blog images">
                                         @else
-                                        <img src="{{ asset('front-end/posts/default.jpg') }}" alt="{{ $post->title }}">
+                                        <img src="{{ asset('assets/posts/default.jpg') }}" alt="{{ $post->title }}">
                                         @endif
                                     </a>
                                 </div>

@@ -69,7 +69,7 @@
                         <div class="row">
                             @if (auth()->user()->image != '')
                             <div class="col-12">
-                                <img src="{{ asset('front-end/users/' . auth()->user()->image) }}" width="170px"
+                                <img src="{{ asset('assets/users/' . auth()->user()->image) }}" width="170px"
                                     height="130px" class="img-fluid" style="border-radius: 20px;">
                             </div>
                             @endif

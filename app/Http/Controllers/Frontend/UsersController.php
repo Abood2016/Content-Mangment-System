@@ -65,7 +65,7 @@ class UsersController extends Controller
                 $filename = $post->slug . '-' . time() . '-' . $i . '.' . $file->getClientOriginalExtension();
                 $file_size = $file->getSize();
                 $file_type = $file->getMimeType();
-                $path = public_path('front-end/posts/' . $filename);
+                $path = public_path('assets/posts' . $filename);
                 Image::make($file->getRealPath())->resize(800, null, function ($constraint) {
                     $constraint->aspectRatio();
                 })->save($path, 100);
@@ -117,7 +117,7 @@ class UsersController extends Controller
                     $filename = $post->slug . '-' . time() . '-' . $i . '.' . $file->getClientOriginalExtension();
                     $file_size = $file->getSize();
                     $file_type = $file->getMimeType();
-                    $path = public_path('front-end/posts/' . $filename);
+                    $path = public_path('assets/posts' . $filename);
                     Image::make($file->getRealPath())->resize(800, null, function ($constraint) {
                         $constraint->aspectRatio();
                     })->save($path, 100);
@@ -148,8 +148,8 @@ class UsersController extends Controller
         if ($post) {
             if ($post->media->count() > 0) {
                 foreach ($post->media as $media) {
-                    if (File::exists('front-end/posts/' . $media->image_name)) {
-                        unlink('front-end/posts/' . $media->image_name);
+                    if (File::exists('assets/posts/' . $media->image_name)) {
+                        unlink('assets/posts/' . $media->image_name);
                     }
                 }
             }
@@ -172,8 +172,8 @@ class UsersController extends Controller
     {
         $media = Post_images::whereId($media_id)->first();
         if ($media) {
-            if (File::exists('front-end/posts/' . $media->image_name)) {
-                unlink('front-end/posts/' . $media->image_name);
+            if (File::exists('assets/posts/' . $media->image_name)) {
+                unlink('assets/posts/' . $media->image_name);
             }
             $media->delete();
             return true;
@@ -291,13 +291,13 @@ class UsersController extends Controller
 
 
         if ($image = $request->file('image')) {
-            if (auth()->user()->user_image != '') {
-                if (File::exists('/front-end/users/' . auth()->user()->image)) {
-                    unlink('/front-end/users/' . auth()->user()->image);
+            if (auth()->user()->image != '') {
+                if (File::exists('/assets/users/' . auth()->user()->image)) {
+                    unlink('/assets/users/' . auth()->user()->image);
                 }
             }
             $filename = Str::slug(auth()->user()->username) . '.' . $image->getClientOriginalExtension();
-            $path = public_path('front-end/users/' . $filename);
+            $path = public_path('assets/users/' . $filename);
             Image::make($image->getRealPath())->resize(300, 300, function ($constraint) {
                 $constraint->aspectRatio();
             })->save($path, 100);

@@ -73,9 +73,9 @@
                 <span class="mr-2 d-none d-lg-inline text-gray-600 small">{{ auth()->user()->name }}</span>
                     @if(auth()->user()->image != '')
                     
-                    <img class="img-profile rounded-circle" src="{{ asset('front-end/users/' . auth()->user()->image) }}">
+                    <img class="img-profile rounded-circle" src="{{ asset('assets/users/' . auth()->user()->image) }}">
                      @else
-                     <img class="img-profile rounded-circle" src="{{ asset('front-end/users/default.jpg')}}">
+                     <img class="img-profile rounded-circle" src="{{ asset('assets/users/defualt-user.jpeg')}}">
 
                     @endif
             </a>

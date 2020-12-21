@@ -23,10 +23,10 @@
                         <div class="thumb">
                             <a href="{{ route('post.show',$recent_post->slug) }}">
                                 @if ($recent_post->media->count() > 0)
-                                <img src="{{ asset('front-end/posts/' . $recent_post->media->first()->image_name) }}"
+                                <img src="{{ asset('assets/posts/' . $recent_post->media->first()->image_name) }}"
                                     alt="blog images">
                                 @else
-                                <img src="{{ asset('front-end/posts/default-small.jpg') }}"
+                                <img src="{{ asset('assets/posts/default-small.jpg') }}"
                                     alt="{{ $recent_post->title }}">
                                 @endif
                             </a>

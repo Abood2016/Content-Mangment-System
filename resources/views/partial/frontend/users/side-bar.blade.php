@@ -2,7 +2,7 @@
     <aside class="widget recent_widget">
         <ul>
             <li class="list-group-item">
-                <img src="{{ asset('front-end/users/' . auth()->user()->image) }}" style="border-radius: 20px" alt="{{ auth()->user()->name }}">
+                <img src="{{ asset('assets/users/' . auth()->user()->image) }}" style="border-radius: 20px" alt="{{ auth()->user()->name }}">
             </li>
             <li class="list-group-item"><a href="{{ route('frontend.dashboard') }}">My Posts</a></li>
                 <li class="list-group-item"><a href="{{ route('users.post.create') }}">Create Post</a></li>

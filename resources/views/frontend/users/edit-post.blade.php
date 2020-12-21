@@ -51,7 +51,7 @@
                         <div class="col-4 ">
                             <label for="comment_able">Comment Able</label>
                             <select name="comment_able" id="comment_able" class="form-control">
-                                <option disabled selected>نوع الحساب</option>
+                                <option disabled selected>Comment Able</option>
                                 <option value="1" {{ ($post->comment_able == '1' ? "selected":"") }}>
                                     Yes
                                 </option>
@@ -124,7 +124,7 @@
        }); 
 
        $('#post-images').fileinput({
-            theme: "fa",
+            theme: "fas",
             maxFileCount: 5,
             allowedFileTypes: ['image'],
             showCancel: true,
@@ -134,7 +134,7 @@
             initialPreview: [
                 @if($post->media->count() > 0)
                 @foreach($post->media as $media)
-                "{{ asset('front-end/posts/' . $media->image_name) }}",
+                "{{ asset('assets/posts/' . $media->image_name) }}",
                 @endforeach
                 @endif
             ],

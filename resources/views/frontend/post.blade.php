@@ -21,7 +21,7 @@
                             <div class="carousel-inner">
                                 @foreach ($post->media as $media)
                                 <div class="carousel-item {{ $loop->index == 0 ? 'active' : '' }}">
-                                    <img src="{{ asset('front-end/posts/' . $media->image_name) }}"
+                                    <img src="{{ asset('assets/posts/' . $media->image_name) }}"
                                         class="d-block w-100" alt="{{ $post->title }}">
                                 </div>
                                 @endforeach

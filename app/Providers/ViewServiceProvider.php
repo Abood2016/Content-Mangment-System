@@ -67,11 +67,9 @@ class ViewServiceProvider extends ServiceProvider
             $recent_comments = Cache::get('recent_comments');
 
             if (!Cache::has('recent_categoreis')) {
-
                 $recent_categoreis = Category::whereStatus(1)->orderBy('id', 'desc')->get();
 
                 Cache::remember('recent_categoreis', 3600, function () use ($recent_categoreis) {
-
                     return $recent_categoreis;
                 });
             }
