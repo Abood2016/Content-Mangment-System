@@ -4,10 +4,11 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Cviebrock\EloquentSluggable\Sluggable;
+use Nicolaslopezj\Searchable\SearchableTrait;
 
 class Page extends Model
 {
-    use Sluggable;
+    use Sluggable,SearchableTrait;
     protected $guarded = [];
     protected $table = 'posts';
 
@@ -19,6 +20,13 @@ class Page extends Model
             ]
         ];
     }
+    protected $searchable = [
+        'columns' => [
+            'posts.title'  => 10,
+            'posts.description'  => 10,
+
+        ]
+    ];
 
     function category()
     {
@@ -34,6 +42,11 @@ class Page extends Model
     function media()
     {
         return $this->hasMany(Post_images::class,'post_id','id');
+    }
+
+    public function status()
+    {
+        return $this->status = 1 ? 'Active' : 'DeActive';
     }
 
 }

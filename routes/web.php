@@ -78,6 +78,8 @@ Route::group(['prefix' => 'admin'], function () {
       Route::get('/index',                        ['as' => 'admin.index',                 'uses' => 'Backend\AdminController@index']);
       Route::post('/posts/removeImage/{media_id}', ['as' => 'admin.posts.media.destroy', 'uses' => 'Backend\PostsController@removeImage']);
       Route::resource('posts',           'Backend\PostsController',['as' => 'admin']);
+
+      Route::post('/pages/removeImage/{media_id}', ['as' => 'admin.pages.media.destroy', 'uses' => 'Backend\PagesController@removeImage']);
       Route::resource('pages',           'Backend\PagesController',['as' => 'admin']);
     
       Route::resource('post_comments',   'Backend\PostCommentController',['as' => 'admin']);
